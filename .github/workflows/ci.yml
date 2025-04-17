@@ -25,7 +25,7 @@ jobs:
           sed -i "s/__PACKAGE_VERSION__/$TAG_VERSION/g" src/deno.json
       - name: Copy license & README
         run: |
-          cp lattice-sdk-cpp/LICENSE src
+          cp lattice-sdk-cpp/LICENSE.md src
           cp lattice-sdk-cpp/README.md src
       - name: Upload TypeScript code
         uses: actions/upload-artifact@v4
