@@ -1,0 +1,49 @@
+name: Publish to JSR
+
+on: push
+
+permissions: write-all
+
+jobs:
+  codegen:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Buf
+        uses: bufbuild/buf-setup-action@main
+        with:
+          github_token: ${{ github.token }}
+      - name: Generate code
+        run: buf generate
+      - name: Set Package Versions
+        run: |
+          TAG_VERSION=$(git describe --tags --abbrev=0)
+          sed -i "s/__PACKAGE_VERSION__/${TAG_VERSION}/g" src/deno.json
+      - name: Copy license & README
+        run: |
+          cp lattice-sdk-cpp/LICENSE src
+          cp lattice-sdk-cpp/README.md src
+      - name: Upload TypeScript code
+        uses: actions/upload-artifact@v4
+        with:
+          name: ts_code
+          path: src
+
+  publish-jsr:
+    runs-on: ubuntu-24.04
+    needs: codegen
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Download TypeScript code
+        uses: actions/download-artifact@v4
+        with:
+          name: ts_code
+      - name: Set up Deno
+        uses: denoland/setup-deno@main
+        with:
+          deno-version: rc
+      - name: Publish to JSR
+        run: deno publish

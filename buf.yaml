@@ -1,0 +1,4 @@
+version: v2
+modules:
+  - path: lattice-sdk-cpp/protos
+    name: buf.build/anduril/lattice

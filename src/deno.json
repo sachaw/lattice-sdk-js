@@ -1,0 +1,12 @@
+{
+  "name": "@sachaw/lattice-sdk-js",
+  "version": "__PACKAGE_VERSION__",
+  "imports": {
+    "@bufbuild/protobuf": "npm:@bufbuild/protobuf@^2.2.5"
+  },
+  "publish": {
+    "exclude": [
+      "!lib"
+    ]
+  }
+}

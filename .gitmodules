@@ -1,0 +1,3 @@
+[submodule "lattice-sdk-cpp"]
+	path = lattice-sdk-cpp
+	url = https://github.com/anduril/lattice-sdk-cpp.git
