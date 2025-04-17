@@ -1,2 +1,3 @@
+src/mod.ts
 src/lib/*
 !.gitkeep

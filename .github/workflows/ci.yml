@@ -13,12 +13,18 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
+      - name: Set up Deno
+        uses: denoland/setup-deno@main
+        with:
+          deno-version: v2.x
       - name: Setup Buf
         uses: bufbuild/buf-setup-action@main
         with:
           github_token: ${{ github.token }}
       - name: Generate code
         run: buf generate
+      - name: Genrate Barrel file
+        run: deno run --allow-read --allow-write bin/gen-barrel.ts
       - name: Set Package Version
         run: |
           TAG_VERSION=$(git -C lattice-sdk-cpp describe --tags --abbrev=0)
@@ -47,6 +53,6 @@ jobs:
       - name: Set up Deno
         uses: denoland/setup-deno@main
         with:
-          deno-version: rc
+          deno-version: v2.x
       - name: Publish to JSR
         run: deno publish
