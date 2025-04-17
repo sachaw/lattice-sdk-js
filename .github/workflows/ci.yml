@@ -18,10 +18,10 @@ jobs:
           github_token: ${{ github.token }}
       - name: Generate code
         run: buf generate
-      - name: Set Package Versions
+      - name: Set Package Version
         run: |
-          TAG_VERSION=$(git describe --tags --abbrev=0)
-          sed -i "s/__PACKAGE_VERSION__/${TAG_VERSION}/g" src/deno.json
+          TAG_VERSION=$(git -C lattice-sdk-cpp describe --tags --abbrev=0)
+          sed -i "s/__PACKAGE_VERSION__/$TAG_VERSION/g" src/deno.json
       - name: Copy license & README
         run: |
           cp lattice-sdk-cpp/LICENSE src
