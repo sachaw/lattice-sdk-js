@@ -27,7 +27,7 @@ jobs:
         run: deno run --allow-read --allow-write bin/gen-barrel.ts
       - name: Set Package Version
         run: |
-          TAG_VERSION=$(git -C lattice-sdk-cpp describe --tags --abbrev=0)
+          TAG_VERSION=$(git -C lattice-sdk-cpp describe --tags --abbrev=0 | sed 's/^v//')
           sed -i "s/__PACKAGE_VERSION__/$TAG_VERSION/g" src/deno.json
       - name: Copy license & README
         run: |
